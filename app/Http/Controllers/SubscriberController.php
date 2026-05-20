@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Subscriber;
+
+class SubscriberController extends Controller
+{
+    public function store(Request $request)
+    {
+        return view('welcome');
+    }
+    public function subscribe(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:subscribers,email',
+        ]);
+
+        Subscriber::create([
+            'email' => $request->email,
+        ]);
+
+        return response()->json(['success' => 'You have successfully subscribed!'], 200);
+    }
+}
